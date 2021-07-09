@@ -59,7 +59,7 @@
                 </CollectionView>
             </Grid>
         </Grid>
-        <TimePicker x:Name="pickTime" />
+        <Button x:Name="pickTime" Text="Reset" Clicked="pickTime_Clicked" />
     </StackLayout>
 
 </ContentPage>

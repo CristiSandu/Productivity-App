@@ -15,10 +15,22 @@ namespace Productivity_App
         public MainPage()
         {
             InitializeComponent();
+            
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
             Setup();
         }
 
         private List<Event> AllEvents { get; set; }
+        
+        private void pickTime_Clicked(object sender, EventArgs e)
+        {
+            Preferences.Remove("time");
+            OnAppearing();
+        }
 
         private List<Event> GetEvents()
         {
@@ -30,17 +42,17 @@ namespace Productivity_App
                 time = DateTime.Parse(myValue);
                 if (time < DateTime.Now)
                 {
-                    time = DateTime.Now.AddHours(8);
+                    time = DateTime.Now.AddHours(8).AddMinutes(30);
                     Preferences.Set("time", time.ToString());
                 }
             }else
             {
-                time = DateTime.Now.AddHours(8);
+                time = DateTime.Now.AddHours(8).AddMinutes(30);
                 Preferences.Set("time", time.ToString());
             }
             return new List<Event>()
             {
-                new Event{ EventTitle = "Camping", BgColor = "#EB9999", Date = new DateTime(DateTime.Now.Ticks + new TimeSpan(0, 8, 0, 0).Ticks), DateRemain = time},
+                new Event{ EventTitle = "Camping", BgColor = "#EB9999", Date = new DateTime(DateTime.Now.Ticks + new TimeSpan(0, 8, 30, 0).Ticks), DateRemain = time},
             };
         }
 
@@ -48,7 +60,7 @@ namespace Productivity_App
         {
             AllEvents = GetEvents();
             eventList.ItemsSource = AllEvents;
-
+            
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
                 foreach (var evt in AllEvents)
@@ -63,6 +75,8 @@ namespace Productivity_App
                 return true;
             });
         }
+
+       
     }
 
     public class Event
