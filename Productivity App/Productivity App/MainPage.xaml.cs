@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Productivity_App.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -22,10 +25,21 @@ namespace Productivity_App
         {
             base.OnAppearing();
             Setup();
+            Login();
         }
 
         private List<Event> AllEvents { get; set; }
         
+        public async void Login()
+        {
+            var httpClient = new HttpClient();
+            var respons = await httpClient.GetStringAsync("https://weatherapp20210725210906.azurewebsites.net/api/RoomController");
+            var login = JsonConvert.DeserializeObject<List<RoomItem>>(respons);
+            tempLabel.Text = login[0].Temp;
+            humyLabel.Text = login[0].Humy;
+
+        }
+
         private void pickTime_Clicked(object sender, EventArgs e)
         {
             Preferences.Remove("time");

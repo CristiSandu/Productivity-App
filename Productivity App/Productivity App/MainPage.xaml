@@ -11,6 +11,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+
                 </Grid.RowDefinitions>
                 <Label Text="EVENTS" FontSize="24" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
                 <CollectionView x:Name="eventList" Grid.Row="1" ItemsLayout="VerticalList" ItemsSource="{Binding}">
@@ -57,9 +59,16 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                <StackLayout Grid.Row="2">
+                    <Label x:Name="tempLabel" />
+                    <Label x:Name="humyLabel" />
+                    <Button x:Name="pickTime" Text="Reset" Clicked="pickTime_Clicked" />
+
+                </StackLayout>
             </Grid>
         </Grid>
-        <Button x:Name="pickTime" Text="Reset" Clicked="pickTime_Clicked" />
+       
+
     </StackLayout>
 
 </ContentPage>
