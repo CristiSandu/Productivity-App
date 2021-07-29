@@ -5,70 +5,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Productivity_App.MainPage">
-    <StackLayout>
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Grid Margin="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+    <Grid Padding="8,16,8,8" RowSpacing="8" ColumnSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".9*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-                </Grid.RowDefinitions>
-                <Label Text="EVENTS" FontSize="24" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
-                <CollectionView x:Name="eventList" Grid.Row="1" ItemsLayout="VerticalList" ItemsSource="{Binding}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <ContentView>
-                                <Frame HasShadow="True" CornerRadius="15" Margin="0,5" Padding="10" HeightRequest="100" BackgroundColor="{Binding BgColor}">
-                                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height=".5*"/>
-                                        </Grid.RowDefinitions>
-                                        <Image Source="clock.png" Aspect="AspectFit" HorizontalOptions="End" Grid.RowSpan="2"/>
-                                        <StackLayout Orientation="Horizontal" Spacing="10">
-                                            <BoxView WidthRequest="12" HeightRequest="12" CornerRadius="6" BackgroundColor="#F8F8F8" VerticalOptions="Center"/>
-                                            <Label Text="{Binding EventTitle}" FontSize="12" TextColor="#F8F8F8"/>
-                                        </StackLayout>
+        <Frame Style="{StaticResource FrameNewsStyle}" BackgroundColor="{StaticResource MagicMint}">
+            <StackLayout Style="{StaticResource ValueStack}"
+                         Spacing="16">
+                <Label x:Name="tempLabel" Style="{StaticResource TitleStyle}" />
+                <Label x:Name="humyLabel" Style="{StaticResource TitleStyle}"/>
+            </StackLayout>
+        </Frame>
 
-                                        <StackLayout Orientation="Horizontal" Grid.Row="1" HorizontalOptions="End" Margin="10" Spacing="15">
-                                            <StackLayout>
-                                                <Label Text="{Binding Days}" FontSize="35" FontAttributes="Bold" TextColor="White" HorizontalOptions="End"/>
-                                                <Label Text="DAYS" FontSize="10" TextColor="White" Opacity="0.5" HorizontalOptions="End" Margin="0,-5,0,0"/>
-                                            </StackLayout>
-                                            <StackLayout>
-                                                <Label Text="{Binding Hours}" FontSize="35" FontAttributes="Bold" TextColor="White" HorizontalOptions="End"/>
-                                                <Label Text="HOURS" FontSize="10" TextColor="White" Opacity="0.5" HorizontalOptions="End" Margin="0,-5,0,0"/>
-                                            </StackLayout>
-                                            <StackLayout>
-                                                <Label Text="{Binding Minutes}" FontSize="35" FontAttributes="Bold" TextColor="White" HorizontalOptions="End"/>
-                                                <Label Text="MINUTES" FontSize="10" TextColor="White" Opacity="0.5" HorizontalOptions="End" Margin="0,-5,0,0"/>
-                                            </StackLayout>
-                                            <StackLayout>
-                                                <Label Text="{Binding Seconds}" FontSize="35" FontAttributes="Bold" TextColor="White" HorizontalOptions="End"/>
-                                                <Label Text="SECONDS" FontSize="10" TextColor="White" Opacity="0.5" HorizontalOptions="End" Margin="0,-5,0,0"/>
-                                            </StackLayout>
-                                        </StackLayout>
-                                        <StackLayout  Grid.Row="2">
-                                            <Label Text="{Binding DateRemain}" FontSize="10" TextColor="White" Opacity="0.5" HorizontalOptions="End" Margin="0,-5,0,0"/>
-                                        </StackLayout>
-                                    </Grid>
-                                </Frame>
-                            </ContentView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <StackLayout Grid.Row="2">
-                    <Label x:Name="tempLabel" />
-                    <Label x:Name="humyLabel" />
-                    <Button x:Name="pickTime" Text="Reset" Clicked="pickTime_Clicked" />
+        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Column="1" BackgroundColor="{StaticResource BabyBlue}">
+            <StackLayout Style="{StaticResource ValueStack}">
+                <Label x:Name="tempLabel1" Style="{StaticResource TitleStyle}" />
+                <Label x:Name="humyLabel1" Style="{StaticResource TitleStyle}"/>
+            </StackLayout>
+        </Frame>
 
+        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource RosyBrown}">
+            <StackLayout Style="{StaticResource ValueStack}" Orientation="Horizontal" Spacing="16">
+                <StackLayout>
+                    <Label x:Name="houers" Text="{Binding Hours}" Style="{StaticResource CountDownStyle}"/>
+                    <Label Text="HOURS" Style="{StaticResource CountDownStyleLabels}"/>
                 </StackLayout>
-            </Grid>
-        </Grid>
-       
+                <StackLayout>
+                    <Label x:Name="minutes" Text="{Binding Minutes}" Style="{StaticResource CountDownStyle}"/>
+                    <Label Text="MINUTES" Style="{StaticResource CountDownStyleLabels}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label x:Name="seconds" Text="{Binding Seconds}" Style="{StaticResource CountDownStyle}"/>
+                    <Label Text="SECONDS"  Style="{StaticResource CountDownStyleLabels}"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
 
-    </StackLayout>
+        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Blushr}">
+            <StackLayout Style="{StaticResource ValueStack}">
+                <Label x:Name="dateRemain" Style="{StaticResource CountDownStyle}" HorizontalOptions="Center" VerticalOptions="Center"  />
+            </StackLayout>
+        </Frame>
+
+        <StackLayout   Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Style="{StaticResource ValueStack}" >
+            <Button x:Name="refreshTemp" Text="Refresh" 
+                    Style="{StaticResource ButtonCheckedStyle}"
+                    Clicked="refreshTemp_Clicked"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"/>
+
+            <Button x:Name="restartTime" Text="Register"
+                    Clicked="restartTime_Clicked"
+                    Style="{StaticResource ButtonUnCheckStyle}"
+                    HorizontalOptions="Center"    
+                    VerticalOptions="Center"/>
+        </StackLayout>
+
+
+    </Grid>
 
 </ContentPage>

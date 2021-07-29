@@ -3,6 +3,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Productivity_App.App">
     <Application.Resources>
+        <ResourceDictionary>
 
+            <Color x:Key="AccentColor">#00B6F0</Color>
+            <Color x:Key="AccentColorBlack">#2E2E2E</Color>
+
+
+            <Color x:Key="MagicMint">#99EDCC</Color>
+            <Color x:Key="BabyBlue">#9AC4F8</Color>
+            <Color x:Key="RosyBrown">#CB958E</Color>
+            <Color x:Key="Blushr">#E36588</Color>
+            <Color x:Key="JazzberryJam">#9A275A</Color>
+
+
+            <Style x:Key="MainTitleStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Large"/>
+            </Style>
+
+            <Style x:Key="TitleStyle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+
+            <Style x:Key="FrameNewsStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+
+            <Style x:Key="ButtonUnCheckStyle" TargetType="Button">
+                <Setter Property="CornerRadius" Value="30" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource JazzberryJam}"/>
+                <Setter Property="BorderColor" Value="{StaticResource JazzberryJam}"/>
+                <Setter Property="BorderWidth" Value="2"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+
+            <Style x:Key="ButtonCheckedStyle" TargetType="Button">
+                <Setter Property="CornerRadius" Value="30" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource AccentColorBlack}, Light=White }"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource JazzberryJam}"/>
+                <Setter Property="BorderWidth" Value="2"/>
+            </Style>
+
+            <Style x:Key="CountDownStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="35"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+            </Style>
+
+            <Style x:Key="CountDownStyleLabels" TargetType="Label">
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+                <Setter Property="Opacity" Value="0.5"/>
+                <Setter Property="Margin" Value="0,-5,0,0"/>
+            </Style>
+
+
+            <Style x:Key="ValueStack" TargetType="StackLayout">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

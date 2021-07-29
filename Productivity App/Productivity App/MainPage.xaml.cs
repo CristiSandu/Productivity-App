@@ -35,8 +35,8 @@ namespace Productivity_App
             var httpClient = new HttpClient();
             var respons = await httpClient.GetStringAsync("https://weatherapp20210725210906.azurewebsites.net/api/RoomController");
             var login = JsonConvert.DeserializeObject<List<RoomItem>>(respons);
-            tempLabel.Text = login[0].Temp;
-            humyLabel.Text = login[0].Humy;
+            tempLabel.Text = $"Temp: {login[0].Temp}°C";
+            humyLabel.Text = $"Humy: {login[0].Humy}%";
 
         }
 
@@ -73,7 +73,6 @@ namespace Productivity_App
         private void Setup()
         {
             AllEvents = GetEvents();
-            eventList.ItemsSource = AllEvents;
             
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
@@ -83,14 +82,31 @@ namespace Productivity_App
                     evt.Timespan = timespan;
                 }
 
-                eventList.ItemsSource = null;
-                eventList.ItemsSource = AllEvents;
+                houers.Text = null;
+                houers.Text = AllEvents[0].Hours;
+
+                minutes.Text = null;
+                minutes.Text = AllEvents[0].Minutes;
+
+                seconds.Text = null;
+                seconds.Text = AllEvents[0].Seconds;
+
+                dateRemain.Text = $"End Program: {AllEvents[0].DateRemain.ToString("HH:mm")}";
 
                 return true;
             });
         }
 
-       
+        private void refreshTemp_Clicked(object sender, EventArgs e)
+        {
+            OnAppearing();
+        }
+
+        private void restartTime_Clicked(object sender, EventArgs e)
+        {
+            Preferences.Remove("time");
+            OnAppearing();
+        }
     }
 
     public class Event
