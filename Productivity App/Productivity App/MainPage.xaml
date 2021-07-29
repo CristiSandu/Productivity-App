@@ -62,7 +62,7 @@
                     VerticalOptions="Center" 
                     HorizontalOptions="Center"/>
 
-            <Button x:Name="restartTime" Text="Register"
+            <Button x:Name="restartTime" Text="Start"
                     Clicked="restartTime_Clicked"
                     Style="{StaticResource ButtonUnCheckStyle}"
                     HorizontalOptions="Center"    

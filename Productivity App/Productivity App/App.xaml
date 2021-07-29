@@ -17,11 +17,13 @@
 
 
             <Style x:Key="MainTitleStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource AccentColorBlack}}"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="FontSize" Value="Large"/>
             </Style>
 
             <Style x:Key="TitleStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource AccentColorBlack}}"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="FontSize" Value="Medium"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
@@ -52,12 +54,14 @@
 
             <Style x:Key="CountDownStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="35"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource AccentColorBlack}}"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="HorizontalOptions" Value="End"/>
             </Style>
 
             <Style x:Key="CountDownStyleLabels" TargetType="Label">
                 <Setter Property="FontSize" Value="10"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource AccentColorBlack}}"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="HorizontalOptions" Value="End"/>
                 <Setter Property="Opacity" Value="0.5"/>

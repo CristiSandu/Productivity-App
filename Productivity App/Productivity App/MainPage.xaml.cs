@@ -40,6 +40,17 @@ namespace Productivity_App
 
         }
 
+
+        public async void Wether()
+        {
+            //
+            var httpClient = new HttpClient();
+            var respons = await httpClient.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?zip=107345,ro&appid={44afe348069b1812b24e39c82be13c9e}");
+            //var login = JsonConvert.DeserializeObject<List<RoomItem>>(respons);
+            //tempLabel.Text = $"Temp: {login[0].Temp}°C";
+            //humyLabel.Text = $"Humy: {login[0].Humy}%";
+        }
+
         private void pickTime_Clicked(object sender, EventArgs e)
         {
             Preferences.Remove("time");
