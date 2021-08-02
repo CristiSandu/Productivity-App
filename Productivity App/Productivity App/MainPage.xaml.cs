@@ -2,6 +2,7 @@
 using Productivity_App.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
@@ -18,39 +19,50 @@ namespace Productivity_App
         public MainPage()
         {
             InitializeComponent();
-            
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
             Setup();
             Login();
             Wether();
         }
 
         private List<Event> AllEvents { get; set; }
-        
+        private ObservableCollection<BreakModel> AllBrakes { get; set; }
+
+
         public async void Login()
         {
+            roomTempActivity.IsRunning = true;
+
             var httpClient = new HttpClient();
             var respons = await httpClient.GetStringAsync("https://weatherapp20210725210906.azurewebsites.net/api/RoomController");
             var login = JsonConvert.DeserializeObject<List<RoomItem>>(respons);
             tempLabel.Text = $"Temp: {login[0].Temp}°C";
             humyLabel.Text = $"Humy: {login[0].Humy}%";
 
+            roomTempActivity.IsRunning = false;
         }
 
 
         public async void Wether()
         {
-            //
+            wetherTempActivity.IsRunning = true;
+
             var httpClient = new HttpClient();
             var respons = await httpClient.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?zip=107345,ro&appid=44afe348069b1812b24e39c82be13c9e");
             WeatherModel myDeserializedClass = JsonConvert.DeserializeObject<WeatherModel>(respons);
-            //var login = JsonConvert.DeserializeObject<List<RoomItem>>(respons);
+
             tempLabel1.Text = $"Temp: {myDeserializedClass.main.temp - 273.15}°C";
             humyLabel1.Text = $"Humy: {myDeserializedClass.main.humidity}%";
+
+            whederType.Source = ImageSource.FromUri( new Uri("https://openweathermap.org/img/wn/" + myDeserializedClass.weather[0].icon + "@4x.png"));
+
+
+            wetherTempActivity.IsRunning = false;
         }
 
         private void pickTime_Clicked(object sender, EventArgs e)
@@ -61,20 +73,21 @@ namespace Productivity_App
 
         private List<Event> GetEvents()
         {
-            
-            DateTime time ;
+
+            DateTime time;
             if (Preferences.ContainsKey("time"))
             {
                 var myValue = Preferences.Get("time", "default_value");
                 time = DateTime.Parse(myValue);
                 if (time < DateTime.Now)
                 {
-                    time = DateTime.Now.AddHours(8).AddMinutes(30);
+                    time = DateTime.Now.AddHours(8);
                     Preferences.Set("time", time.ToString());
                 }
-            }else
+            }
+            else
             {
-                time = DateTime.Now.AddHours(8).AddMinutes(30);
+                time = DateTime.Now.AddHours(8);
                 Preferences.Set("time", time.ToString());
             }
             return new List<Event>()
@@ -83,10 +96,36 @@ namespace Productivity_App
             };
         }
 
+        private List<BreakModel> GetBreaks()
+        {
+            var myValue = Preferences.Get("time", "default_value");
+            if (myValue == "default_value")
+                return new List<BreakModel>();
+            DateTime endtime = DateTime.Parse(myValue);
+            DateTime startTime = endtime.AddHours(-8);
+
+            List<BreakModel> breaks = new List<BreakModel>();
+
+            DateTime startBrake = startTime.AddMinutes(50);
+            DateTime endBrake = startBrake.AddMinutes(10);
+
+            breaks.Add(new BreakModel { BrakeTimeStart = startBrake, BrakeTimeEnd = endBrake });
+
+            while (DateTime.Compare(endBrake, endtime) < 0)
+            {
+                startBrake = endBrake.AddMinutes(50);
+                endBrake = startBrake.AddMinutes(10);
+
+                breaks.Add(new BreakModel { BrakeTimeStart = startBrake, BrakeTimeEnd = endBrake });
+            }
+
+            return breaks;
+        }
+
         private void Setup()
         {
             AllEvents = GetEvents();
-            
+
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
                 foreach (var evt in AllEvents)
@@ -108,6 +147,9 @@ namespace Productivity_App
 
                 return true;
             });
+
+            AllBrakes = new ObservableCollection<BreakModel>(GetBreaks());
+            breackesList.ItemsSource = AllBrakes;
         }
 
         private void refreshTemp_Clicked(object sender, EventArgs e)

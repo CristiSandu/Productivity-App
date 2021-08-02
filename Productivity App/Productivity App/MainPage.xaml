@@ -3,23 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:converters ="clr-namespace:Productivity_App.Converters"
              mc:Ignorable="d"
              x:Class="Productivity_App.MainPage">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ColorBreakConvertor x:Key="colorBrakeConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <Grid Padding="8,16,8,8" RowSpacing="8" ColumnSpacing="8">
         <Grid.RowDefinitions>
-            <RowDefinition Height=".9*"/>
-            <RowDefinition Height=".5*"/>
-            <RowDefinition Height=".5*"/>
+            <RowDefinition Height=".7*"/>
+            <RowDefinition Height=".3*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height=".3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ActivityIndicator IsRunning="False" />
 
-        <Frame Style="{StaticResource FrameNewsStyle}" BackgroundColor="{StaticResource MagicMint}">
+        <Frame Style="{StaticResource FrameNewsStyle}"  BackgroundColor="{StaticResource MagicMint}">
             <StackLayout Style="{StaticResource ValueStack}"
                          Spacing="16">
                 <Label x:Name="tempLabel" Style="{StaticResource TitleStyle}" />
@@ -27,12 +35,31 @@
             </StackLayout>
         </Frame>
 
+        <ActivityIndicator x:Name="roomTempActivity" IsRunning="False" Color="Red" Scale="0.2"/>
+
+        <Button x:Name="refreshTemp" 
+                BackgroundColor="Transparent"
+                Clicked="refreshTemp_Clicked"
+                HeightRequest="100"
+                WidthRequest="100"
+                
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"/>
+
+
         <Frame Style="{StaticResource FrameNewsStyle}" Grid.Column="1" BackgroundColor="{StaticResource BabyBlue}">
             <StackLayout Style="{StaticResource ValueStack}">
+                <Image x:Name="whederType" VerticalOptions="Center"/>
                 <Label x:Name="tempLabel1" Style="{StaticResource TitleStyle}" />
                 <Label x:Name="humyLabel1" Style="{StaticResource TitleStyle}"/>
             </StackLayout>
         </Frame>
+
+        <ActivityIndicator x:Name="wetherTempActivity" Grid.Column="1" IsRunning="False" Scale="0.2" />
+
+        <Button x:Name="refreshWether" Grid.Column="1" 
+                BackgroundColor="Transparent"
+                Clicked="refreshTemp_Clicked"/>
 
         <Frame Style="{StaticResource FrameNewsStyle}" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource RosyBrown}">
             <StackLayout Style="{StaticResource ValueStack}" Orientation="Horizontal" Spacing="16">
@@ -51,26 +78,41 @@
             </StackLayout>
         </Frame>
 
-        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Blushr}">
+        <Button x:Name="resetTime" Grid.Row="1" Grid.ColumnSpan="2"  
+                BackgroundColor="Transparent"
+                Clicked="restartTime_Clicked" />
+
+        <CollectionView  x:Name="breackesList"
+                        Grid.Row="2" 
+                        Grid.ColumnSpan="2">
+            
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="7" VerticalItemSpacing="7"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="{Binding BrakeTimeStart, Converter={StaticResource colorBrakeConverter} }" Style="{StaticResource FrameNewsStyle}" Margin="0">
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal" >
+                                <Label Text="{Binding BrakeTimeStart, StringFormat='{0:HH:mm - }'}" Style="{StaticResource TitleStyle}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                <Label Text="{Binding BrakeTimeEnd, StringFormat='{0:HH:mm}'}"  Style="{StaticResource TitleStyle}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Blushr}">
             <StackLayout Style="{StaticResource ValueStack}">
                 <Label x:Name="dateRemain" Style="{StaticResource CountDownStyle}" HorizontalOptions="Center" VerticalOptions="Center"  />
             </StackLayout>
         </Frame>
-
-        <StackLayout   Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Style="{StaticResource ValueStack}" >
-            <Button x:Name="refreshTemp" Text="Refresh" 
-                    Style="{StaticResource ButtonCheckedStyle}"
-                    Clicked="refreshTemp_Clicked"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center"/>
-
-            <Button x:Name="restartTime" Text="Start"
-                    Clicked="restartTime_Clicked"
-                    Style="{StaticResource ButtonUnCheckStyle}"
-                    HorizontalOptions="Center"    
-                    VerticalOptions="Center"/>
-        </StackLayout>
-
 
     </Grid>
 

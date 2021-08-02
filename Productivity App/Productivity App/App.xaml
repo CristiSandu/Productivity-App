@@ -62,6 +62,7 @@
             <Style x:Key="CountDownStyleLabels" TargetType="Label">
                 <Setter Property="FontSize" Value="10"/>
                 <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource AccentColorBlack}}"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="HorizontalOptions" Value="End"/>
                 <Setter Property="Opacity" Value="0.5"/>
