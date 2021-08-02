@@ -26,6 +26,7 @@ namespace Productivity_App
             base.OnAppearing();
             Setup();
             Login();
+            Wether();
         }
 
         private List<Event> AllEvents { get; set; }
@@ -45,10 +46,11 @@ namespace Productivity_App
         {
             //
             var httpClient = new HttpClient();
-            var respons = await httpClient.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?zip=107345,ro&appid={44afe348069b1812b24e39c82be13c9e}");
+            var respons = await httpClient.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?zip=107345,ro&appid=44afe348069b1812b24e39c82be13c9e");
+            WeatherModel myDeserializedClass = JsonConvert.DeserializeObject<WeatherModel>(respons);
             //var login = JsonConvert.DeserializeObject<List<RoomItem>>(respons);
-            //tempLabel.Text = $"Temp: {login[0].Temp}°C";
-            //humyLabel.Text = $"Humy: {login[0].Humy}%";
+            tempLabel1.Text = $"Temp: {myDeserializedClass.main.temp - 273.15}°C";
+            humyLabel1.Text = $"Humy: {myDeserializedClass.main.humidity}%";
         }
 
         private void pickTime_Clicked(object sender, EventArgs e)

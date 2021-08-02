@@ -17,6 +17,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <ActivityIndicator IsRunning="False" />
+
         <Frame Style="{StaticResource FrameNewsStyle}" BackgroundColor="{StaticResource MagicMint}">
             <StackLayout Style="{StaticResource ValueStack}"
                          Spacing="16">
