@@ -145,20 +145,24 @@ namespace Productivity_App
 
                 seconds.Text = null;
                 seconds.Text = AllEvents[0].Seconds;
-                foreach (var (brk, notification) in from brk in AllBrakes
-                                                    where brk.BrakeTimeStart <= DateTime.Now && brk.BrakeTimeEnd >= DateTime.Now && !brk.NotificationSent
-                                                    let notification = new NotificationRequest
-                                                    {
-                                                        BadgeNumber = 1,
-                                                        Description = $"Start at {brk.BrakeTimeStart.ToString("HH:mm")}, end at {brk.BrakeTimeEnd.ToString("HH:mm")}",
-                                                        Title = "Take A Brake",
-                                                        ReturningData = "Dummy Data",
-                                                        NotificationId = 1337
-                                                    }
-                                                    select (brk, notification))
+
+                if (Device.RuntimePlatform == Device.Android || Device.RuntimePlatform == Device.iOS)
                 {
-                    NotificationCenter.Current.Show(notification);
-                    brk.NotificationSent = true;
+                    foreach (var (brk, notification) in from brk in AllBrakes
+                                                        where brk.BrakeTimeStart <= DateTime.Now && brk.BrakeTimeEnd >= DateTime.Now && !brk.NotificationSent
+                                                        let notification = new NotificationRequest
+                                                        {
+                                                            BadgeNumber = 1,
+                                                            Description = $"Start at {brk.BrakeTimeStart.ToString("HH:mm")}, end at {brk.BrakeTimeEnd.ToString("HH:mm")}",
+                                                            Title = "Take A Brake",
+                                                            ReturningData = "Dummy Data",
+                                                            NotificationId = 1337
+                                                        }
+                                                        select (brk, notification))
+                    {
+                        NotificationCenter.Current.Show(notification);
+                        brk.NotificationSent = true;
+                    }
                 }
 
                 dateRemain.Text = $"End Program: {AllEvents[0].DateRemain.ToString("HH:mm")}";
@@ -170,26 +174,44 @@ namespace Productivity_App
 
         private void refreshTemp_Clicked(object sender, EventArgs e)
         {
-            Vibration.Vibrate();
+            try
+            {
+                Vibration.Vibrate();
 
-            OnAppearing();
+                OnAppearing();
 
-            Vibration.Cancel();
+                Vibration.Cancel();
+            }
+            catch (FeatureNotSupportedException ex)
+            {
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private async void restartTime_Clicked(object sender, EventArgs e)
         {
-            Vibration.Vibrate();
-
-            bool validate = await DisplayAlert("Start/Reset", "Do you want to Start/Reset program ?", "Yes", "No");
-
-            if (validate)
+            try
             {
-                Preferences.Remove("time");
-                OnAppearing();
-            }
+                Vibration.Vibrate();
 
-            Vibration.Cancel();
+                bool validate = await DisplayAlert("Start/Reset", "Do you want to Start/Reset program ?", "Yes", "No");
+
+                if (validate)
+                {
+                    Preferences.Remove("time");
+                    OnAppearing();
+                }
+
+                Vibration.Cancel();
+            }
+            catch (FeatureNotSupportedException ex)
+            {
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 

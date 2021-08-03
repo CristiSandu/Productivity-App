@@ -19,7 +19,7 @@ namespace Productivity_App.Converters
                 {
                     Application.Current.Resources.TryGetValue("MagicMint", out var outColor);
                     return outColor;
-                }else if  (DateTime.Compare(DateTime.Now, startTime) < 0)
+                }else if (DateTime.Compare(DateTime.Now, startTime) < 0)
                 {
                     Application.Current.Resources.TryGetValue("BabyBlue", out var outColor);
                     return outColor;
