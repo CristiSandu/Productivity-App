@@ -28,10 +28,14 @@
 
 
         <Frame Style="{StaticResource FrameNewsStyle}"  BackgroundColor="{StaticResource MagicMint}">
-            <StackLayout Style="{StaticResource ValueStack}"
-                         Spacing="16">
-                <Label x:Name="tempLabel" Style="{StaticResource TitleStyle}" />
-                <Label x:Name="humyLabel" Style="{StaticResource TitleStyle}"/>
+            <StackLayout Style="{StaticResource ValueStack}" Spacing="26">
+                <StackLayout>
+                    <Image x:Name="iconRoom" Source="workspace.png" VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label x:Name="tempLabel" Style="{StaticResource TitleStyle}" />
+                    <Label x:Name="humyLabel" Style="{StaticResource TitleStyle}"/>
+                </StackLayout>
             </StackLayout>
         </Frame>
 
@@ -39,13 +43,7 @@
 
         <Button x:Name="refreshTemp" 
                 BackgroundColor="Transparent"
-                Clicked="refreshTemp_Clicked"
-                HeightRequest="100"
-                WidthRequest="100"
-                
-                VerticalOptions="Center" 
-                HorizontalOptions="Center"/>
-
+                Clicked="refreshTemp_Clicked"/>
 
         <Frame Style="{StaticResource FrameNewsStyle}" Grid.Column="1" BackgroundColor="{StaticResource BabyBlue}">
             <StackLayout Style="{StaticResource ValueStack}">
@@ -85,7 +83,7 @@
         <CollectionView  x:Name="breackesList"
                         Grid.Row="2" 
                         Grid.ColumnSpan="2">
-            
+
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="7" VerticalItemSpacing="7"/>
             </CollectionView.ItemsLayout>

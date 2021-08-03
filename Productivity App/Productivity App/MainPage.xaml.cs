@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Plugin.LocalNotification;
 using Productivity_App.Models;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace Productivity_App
             tempLabel1.Text = $"Temp: {myDeserializedClass.main.temp - 273.15}°C";
             humyLabel1.Text = $"Humy: {myDeserializedClass.main.humidity}%";
 
-            whederType.Source = ImageSource.FromUri( new Uri("https://openweathermap.org/img/wn/" + myDeserializedClass.weather[0].icon + "@4x.png"));
+            whederType.Source = ImageSource.FromUri(new Uri("https://openweathermap.org/img/wn/" + myDeserializedClass.weather[0].icon + "@4x.png"));
 
 
             wetherTempActivity.IsRunning = false;
@@ -125,6 +126,8 @@ namespace Productivity_App
         private void Setup()
         {
             AllEvents = GetEvents();
+            AllBrakes = new ObservableCollection<BreakModel>(GetBreaks());
+            breackesList.ItemsSource = AllBrakes;
 
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
@@ -142,25 +145,51 @@ namespace Productivity_App
 
                 seconds.Text = null;
                 seconds.Text = AllEvents[0].Seconds;
+                foreach (var (brk, notification) in from brk in AllBrakes
+                                                    where brk.BrakeTimeStart <= DateTime.Now && brk.BrakeTimeEnd >= DateTime.Now && !brk.NotificationSent
+                                                    let notification = new NotificationRequest
+                                                    {
+                                                        BadgeNumber = 1,
+                                                        Description = $"Start at {brk.BrakeTimeStart.ToString("HH:mm")}, end at {brk.BrakeTimeEnd.ToString("HH:mm")}",
+                                                        Title = "Take A Brake",
+                                                        ReturningData = "Dummy Data",
+                                                        NotificationId = 1337
+                                                    }
+                                                    select (brk, notification))
+                {
+                    NotificationCenter.Current.Show(notification);
+                    brk.NotificationSent = true;
+                }
 
                 dateRemain.Text = $"End Program: {AllEvents[0].DateRemain.ToString("HH:mm")}";
 
                 return true;
             });
 
-            AllBrakes = new ObservableCollection<BreakModel>(GetBreaks());
-            breackesList.ItemsSource = AllBrakes;
         }
 
         private void refreshTemp_Clicked(object sender, EventArgs e)
         {
+            Vibration.Vibrate();
+
             OnAppearing();
+
+            Vibration.Cancel();
         }
 
-        private void restartTime_Clicked(object sender, EventArgs e)
+        private async void restartTime_Clicked(object sender, EventArgs e)
         {
-            Preferences.Remove("time");
-            OnAppearing();
+            Vibration.Vibrate();
+
+            bool validate = await DisplayAlert("Start/Reset", "Do you want to Start/Reset program ?", "Yes", "No");
+
+            if (validate)
+            {
+                Preferences.Remove("time");
+                OnAppearing();
+            }
+
+            Vibration.Cancel();
         }
     }
 
