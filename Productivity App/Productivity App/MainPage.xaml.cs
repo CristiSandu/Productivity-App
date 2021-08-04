@@ -34,7 +34,6 @@ namespace Productivity_App
         private List<Event> AllEvents { get; set; }
         private ObservableCollection<BreakModel> AllBrakes { get; set; }
 
-
         public async void Login()
         {
             roomTempActivity.IsRunning = true;
@@ -62,7 +61,6 @@ namespace Productivity_App
 
             whederType.Source = ImageSource.FromUri(new Uri("https://openweathermap.org/img/wn/" + myDeserializedClass.weather[0].icon + "@4x.png"));
 
-
             wetherTempActivity.IsRunning = false;
         }
 
@@ -74,7 +72,6 @@ namespace Productivity_App
 
         private List<Event> GetEvents()
         {
-
             DateTime time;
             if (Preferences.ContainsKey("time"))
             {

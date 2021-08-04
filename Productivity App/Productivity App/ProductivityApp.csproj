@@ -29,6 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <SharedImage Include="Img\workspace.svg" BaseSize="200,200" />
+    <SharedImage Include="Img\workspace.svg" BaseSize="50,50" />
   </ItemGroup>
 </Project>

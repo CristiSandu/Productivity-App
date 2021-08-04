@@ -17,7 +17,7 @@ namespace Productivity_App.Converters
                
                 if (DateTime.Compare(DateTime.Now, startTime) >= 0 && DateTime.Compare(DateTime.Now, endTime) < 0)
                 {
-                    Application.Current.Resources.TryGetValue("MagicMint", out var outColor);
+                    Application.Current.Resources.TryGetValue("JazzberryJam", out var outColor);
                     return outColor;
                 }else if (DateTime.Compare(DateTime.Now, startTime) < 0)
                 {
@@ -25,7 +25,7 @@ namespace Productivity_App.Converters
                     return outColor;
                 } else
                 {
-                    Application.Current.Resources.TryGetValue("JazzberryJam", out var outColor);
+                    Application.Current.Resources.TryGetValue("MagicMint", out var outColor);
                     return outColor;
                 }
             }

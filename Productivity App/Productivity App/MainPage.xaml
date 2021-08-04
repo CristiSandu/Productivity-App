@@ -45,7 +45,7 @@
                 BackgroundColor="Transparent"
                 Clicked="refreshTemp_Clicked"/>
 
-        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Column="1" BackgroundColor="{StaticResource BabyBlue}">
+        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Column="1" BackgroundColor="{StaticResource MagicMint}">
             <StackLayout Style="{StaticResource ValueStack}">
                 <Image x:Name="whederType" VerticalOptions="Center"/>
                 <Label x:Name="tempLabel1" Style="{StaticResource TitleStyle}" />
@@ -106,7 +106,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Blushr}">
+        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="{StaticResource RosyBrown}">
             <StackLayout Style="{StaticResource ValueStack}">
                 <Label x:Name="dateRemain" Style="{StaticResource CountDownStyle}" HorizontalOptions="Center" VerticalOptions="Center"  />
             </StackLayout>

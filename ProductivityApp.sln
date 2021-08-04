@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productivity App.UWP", "Productivity App\Productivity App.UWP\Productivity App.UWP.csproj", "{61934F08-B1CD-4CC6-ABDE-B9682DB0BD49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityApp.UWP", "Productivity App\Productivity App.UWP\ProductivityApp.UWP.csproj", "{61934F08-B1CD-4CC6-ABDE-B9682DB0BD49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productivity App.Android", "Productivity App\Productivity App.Android\Productivity App.Android.csproj", "{1DCBD033-909B-4C60-B545-CD548A21CED0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityApp.Android", "Productivity App\Productivity App.Android\ProductivityApp.Android.csproj", "{1DCBD033-909B-4C60-B545-CD548A21CED0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productivity App.iOS", "Productivity App\Productivity App.iOS\Productivity App.iOS.csproj", "{40A95330-AC9E-42D6-8476-17C98E060660}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductivityApp.iOS", "Productivity App\Productivity App.iOS\ProductivityApp.iOS.csproj", "{40A95330-AC9E-42D6-8476-17C98E060660}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productivity App", "Productivity App\Productivity App\Productivity App.csproj", "{FF570F79-C1DB-4F6D-9D9B-A7846677764D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductivityApp", "Productivity App\Productivity App\ProductivityApp.csproj", "{FF570F79-C1DB-4F6D-9D9B-A7846677764D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
