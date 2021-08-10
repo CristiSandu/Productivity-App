@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Plugin.LocalNotification;
 using Productivity_App.Models;
+using ProductivityApp.View;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +41,7 @@ namespace Productivity_App
             roomTempActivity.IsRunning = true;
 
             var httpClient = new HttpClient();
-            var respons = await httpClient.GetStringAsync("https://weatherapp20210725210906.azurewebsites.net/api/RoomController");
+            var respons = await httpClient.GetStringAsync(ProductivityApp.Constants.Constants.PyEndpoint);
             var login = JsonConvert.DeserializeObject<List<RoomItem>>(respons);
             tempLabel.Text = $"Temp: {login[0].Temp}°C";
             humyLabel.Text = $"Humy: {login[0].Humy}%";
@@ -53,13 +55,13 @@ namespace Productivity_App
             wetherTempActivity.IsRunning = true;
 
             var httpClient = new HttpClient();
-            var respons = await httpClient.GetStringAsync("https://api.openweathermap.org/data/2.5/weather?zip=107345,ro&appid=44afe348069b1812b24e39c82be13c9e");
+            var respons = await httpClient.GetStringAsync(ProductivityApp.Constants.Constants.WetherEndpoint);
             WeatherModel myDeserializedClass = JsonConvert.DeserializeObject<WeatherModel>(respons);
 
             tempLabel1.Text = $"Temp: {myDeserializedClass.main.temp - 273.15}°C";
             humyLabel1.Text = $"Humy: {myDeserializedClass.main.humidity}%";
 
-            whederType.Source = ImageSource.FromUri(new Uri("https://openweathermap.org/img/wn/" + myDeserializedClass.weather[0].icon + "@4x.png"));
+            whederType.Source = ImageSource.FromUri(new Uri(ProductivityApp.Constants.Constants.WetherImages + myDeserializedClass.weather[0].icon + "@4x.png"));
 
             wetherTempActivity.IsRunning = false;
         }
@@ -77,10 +79,14 @@ namespace Productivity_App
             {
                 var myValue = Preferences.Get("time", "default_value");
                 time = DateTime.Parse(myValue);
-                if (time < DateTime.Now)
+                if (time.AddHours(8) < DateTime.Now)
                 {
                     time = DateTime.Now.AddHours(8);
                     Preferences.Set("time", time.ToString());
+                } else
+                {
+                    time = time.AddHours(8);
+
                 }
             }
             else
@@ -197,7 +203,8 @@ namespace Productivity_App
 
                 if (validate)
                 {
-                    Preferences.Remove("time");
+                    await PopupNavigation.Instance.PushAsync(new PopUpView());
+
                     OnAppearing();
                 }
 

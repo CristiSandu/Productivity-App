@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 x:Class="ProductivityApp.View.PopUpView">
+    <StackLayout VerticalOptions="CenterAndExpand" Padding="10,0,10,0">
+        <Frame Style="{StaticResource FrameAddNews}"  BorderColor="Transparent" VerticalOptions="CenterAndExpand"  BackgroundColor="{AppThemeBinding Light={StaticResource TextDarkMode}, Dark={StaticResource DarkModeBackground}}">
+            <StackLayout Spacing="24" VerticalOptions="CenterAndExpand" Padding="0,0,0,16" >
+                <TimePicker x:Name="setTime" BackgroundColor="Transparent" TextColor="Transparent" PropertyChanged="setTime_PropertyChanged" />
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

@@ -15,6 +15,9 @@
             <Color x:Key="Blushr">#E36588</Color>
             <Color x:Key="JazzberryJam">#9A275A</Color>
 
+            <Color x:Key="TextDarkMode">#FBFAFB</Color>
+            <Color x:Key="DarkModeBackground">#2E2E2E</Color>
+
 
             <Style x:Key="MainTitleStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource AccentColorBlack}}"/>
@@ -73,6 +76,13 @@
             <Style x:Key="ValueStack" TargetType="StackLayout">
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+            <Style x:Key="FrameAddNews" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BorderColor" Value="{StaticResource AccentColor}"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
             </Style>
 
         </ResourceDictionary>
