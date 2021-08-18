@@ -1,22 +1,79 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProductivityApp.View.ProductivityTabView">
-    <ContentPage.Content>
-        <StackLayout BackgroundColor="Aquamarine">
-            <Label Text="{Binding DateTime1, StringFormat='{0:T}'}"
-                   BackgroundColor="Red"
-                   FontSize="Large"
-                   FontAttributes="Bold"
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" />
-            <Label Text="{Binding EndProgram}"
-                   BackgroundColor="Red"
-                   FontSize="Large"
-                   FontAttributes="Bold"
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" />
-            <Button Text="Reset" Command="{Binding ResetTimer}"/>
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="ProductivityApp.View.ProductivityTabView"
+             xmlns:converters ="clr-namespace:Productivity_App.Converters">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ColorBreakConvertor x:Key="colorBrakeConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid Padding="8,16,8,8" RowSpacing="8" ColumnSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height=".3*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Frame Style="{StaticResource FrameNewsStyle}"  Grid.ColumnSpan="2" BackgroundColor="{StaticResource RosyBrown}">
+            <StackLayout Style="{StaticResource ValueStack}" Orientation="Horizontal" Spacing="16">
+                <StackLayout>
+                    <Label x:Name="houers" Text="{Binding Hours}" Style="{StaticResource CountDownStyle}"/>
+                    <Label Text="HOURS" Style="{StaticResource CountDownStyleLabels}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label x:Name="minutes" Text="{Binding Minutes}" Style="{StaticResource CountDownStyle}"/>
+                    <Label Text="MINUTES" Style="{StaticResource CountDownStyleLabels}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label x:Name="seconds" Text="{Binding Seconds}" Style="{StaticResource CountDownStyle}"/>
+                    <Label Text="SECONDS"  Style="{StaticResource CountDownStyleLabels}"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+
+        <Button x:Name="resetTime" Grid.ColumnSpan="2"  
+                BackgroundColor="Transparent"
+                Command="{Binding ResetTimer}"/>
+
+        <CollectionView  x:Name="breackesList"
+                        Grid.Row="1" 
+                        ItemsSource="{Binding Breaks}"
+                        Grid.ColumnSpan="2">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="7" VerticalItemSpacing="7"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="{Binding BrakeTimeStart, Converter={StaticResource colorBrakeConverter} }" Style="{StaticResource FrameNewsStyle}" Margin="0">
+                        <StackLayout HeightRequest="26">
+                            <StackLayout Orientation="Horizontal" >
+                                <Label Text="{Binding BrakeTimeStart, StringFormat='{0:HH:mm - }'}" Style="{StaticResource TitleStyle}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                <Label Text="{Binding BrakeTimeEnd, StringFormat='{0:HH:mm}'}"  Style="{StaticResource TitleStyle}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Frame Style="{StaticResource FrameNewsStyle}" Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="{StaticResource RosyBrown}">
+            <StackLayout Style="{StaticResource ValueStack}">
+                <Label x:Name="dateRemain" Text="{Binding EndProgram, StringFormat='End Program: {0}'}" Style="{StaticResource CountDownStyle}" HorizontalOptions="Center" VerticalOptions="Center"  />
+            </StackLayout>
+        </Frame>
+
+    </Grid>
 </ContentPage>
