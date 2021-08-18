@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProductivityApp.View.SettingsView">
+    <ContentPage.Content>
+        <StackLayout Padding="20,50,20,20"  VerticalOptions="Start">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Start Time:"
+                       VerticalOptions="Start" 
+                       HorizontalOptions="Center"
+                       FontSize="Large"
+                       FontAttributes="Bold"/>
+                
+                <Label Text="{Binding StartTime}" 
+                       FontSize="Large"
+                       FontAttributes="Bold"/>
+            
+            </StackLayout>
+            <TimePicker x:Name="timePickerForStart" FontAttributes="Bold" FontSize="Large" Time="{Binding StartTime}" PropertyChanged="TimePicker_PropertyChanged"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductivityApp.View;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace Productivity_App
         {
             InitializeComponent();
 
-            MainPage = new ProductivityApp.View.ProductivityTabView();
+            MainPage = new TabbedPage1();
         }
 
         protected override void OnStart()

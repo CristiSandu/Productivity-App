@@ -1,8 +1,10 @@
-﻿using Productivity_App.Models;
+﻿using Plugin.LocalNotification;
+using Productivity_App.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -12,19 +14,19 @@ namespace ProductivityApp.ViewModel
 {
     public class ProductivityTabViewModel : INotifyPropertyChanged
     {
-        private TimeSpan dateTime;
-        public TimeSpan DateTime1
+        private TimeSpan timeRemain;
+        public TimeSpan TimeRemain
         {
             get
             {
-                return dateTime;
+                return timeRemain;
             }
 
             set
             {
-                if (dateTime != value)
+                if (timeRemain != value)
                 {
-                    dateTime = value;
+                    timeRemain = value;
                     if (PropertyChanged != null)
                     {
                         PropertyChanged(this, new PropertyChangedEventArgs("DateTime1"));
@@ -58,9 +60,9 @@ namespace ProductivityApp.ViewModel
             }
         }
 
-        public string Hours => DateTime1.Hours.ToString("00");
-        public string Minutes => DateTime1.Minutes.ToString("00");
-        public string Seconds => DateTime1.Seconds.ToString("00");
+        public string Hours => TimeRemain.Hours.ToString("00");
+        public string Minutes => TimeRemain.Minutes.ToString("00");
+        public string Seconds => TimeRemain.Seconds.ToString("00");
 
         public ICommand ResetTimer { get; private set; }
         public ObservableCollection<BreakModel> Breaks { get; set; } = new ObservableCollection<BreakModel>();
@@ -96,8 +98,29 @@ namespace ProductivityApp.ViewModel
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 TimeSpan test = EndTime - DateTime.Now;
-                this.DateTime1 = test;
+                TimeRemain = test;
+
+                if (Device.RuntimePlatform == Device.Android || Device.RuntimePlatform == Device.iOS)
+                {
+                    foreach (var (brk, notification) in from brk in Breaks
+                                                        where brk.BrakeTimeStart <= DateTime.Now && brk.BrakeTimeEnd >= DateTime.Now && !brk.NotificationSent
+                                                        let notification = new NotificationRequest
+                                                        {
+                                                            BadgeNumber = 1,
+                                                            Description = $"Start at {brk.BrakeTimeStart.ToString("HH:mm")}, end at {brk.BrakeTimeEnd.ToString("HH:mm")}",
+                                                            Title = "Take A Brake",
+                                                            ReturningData = "Dummy Data",
+                                                            NotificationId = 1337
+                                                        }
+                                                        select (brk, notification))
+                    {
+                        NotificationCenter.Current.Show(notification);
+                        brk.NotificationSent = true;
+                    }
+                }
                 
+                PropertyChanged(this, new PropertyChangedEventArgs("Breaks"));
+
                 return true;
             });
         }
