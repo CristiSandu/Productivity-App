@@ -12,8 +12,8 @@ namespace ProductivityApp.ViewModel
 {
     public class ProductivityTabViewModel : INotifyPropertyChanged
     {
-        private string dateTime;
-        public string DateTime1
+        private TimeSpan dateTime;
+        public TimeSpan DateTime1
         {
             get
             {
@@ -28,13 +28,42 @@ namespace ProductivityApp.ViewModel
                     if (PropertyChanged != null)
                     {
                         PropertyChanged(this, new PropertyChangedEventArgs("DateTime1"));
+                        PropertyChanged(this, new PropertyChangedEventArgs("Hours"));
+                        PropertyChanged(this, new PropertyChangedEventArgs("Minutes"));
+                        PropertyChanged(this, new PropertyChangedEventArgs("Seconds"));
+
                     }
                 }
             }
         }
 
+        private DateTime endTime;
+        public DateTime EndTime
+        {
+            get
+            {
+                return endTime;
+            }
+
+            set
+            {
+                if (endTime != value)
+                {
+                    endTime = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("EndTime"));
+                    }
+                }
+            }
+        }
+
+        public string Hours => DateTime1.Hours.ToString("00");
+        public string Minutes => DateTime1.Minutes.ToString("00");
+        public string Seconds => DateTime1.Seconds.ToString("00");
+
         public ICommand ResetTimer { get; private set; }
-        public ObservableCollection<BreakModel> Breaks { get; set; }
+        public ObservableCollection<BreakModel> Breaks { get; set; } = new ObservableCollection<BreakModel>();
 
         private string endProg;
         public string EndProgram
@@ -56,9 +85,26 @@ namespace ProductivityApp.ViewModel
         public ProductivityTabViewModel()
         {
             ResetTimer = new Command(() => {
-                GetBreaks();
                 Preferences.Remove("time");
+                
+                StartTimer();
+                GetBreaks();
             });
+            StartTimer();
+            GetBreaks();
+            
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                TimeSpan test = EndTime - DateTime.Now;
+                this.DateTime1 = test;
+                
+                return true;
+            });
+        }
+
+
+        private void StartTimer()
+        {
             DateTime time;
             if (Preferences.ContainsKey("time"))
             {
@@ -69,7 +115,7 @@ namespace ProductivityApp.ViewModel
                     time = DateTime.Now.AddHours(8);
                     Preferences.Set("time", time.ToString());
                 }
-                    EndProgram = time.ToString("HH:mm");
+                EndProgram = time.ToString("HH:mm");
             }
             else
             {
@@ -77,15 +123,7 @@ namespace ProductivityApp.ViewModel
                 EndProgram = time.ToString("HH:mm");
                 Preferences.Set("time", time.ToString());
             }
-
-            GetBreaks();
-
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-            {
-                TimeSpan test = time - DateTime.Now;
-                this.DateTime1 = string.Format("{0:00}:{1:00}:{2:00}", test.Hours, test.Minutes, test.Seconds);
-                return true;
-            });
+            EndTime = time;
         }
 
         private void GetBreaks()
@@ -114,10 +152,19 @@ namespace ProductivityApp.ViewModel
 
                 breaks.Add(new BreakModel { BrakeTimeStart = startBrake, BrakeTimeEnd = endBrake });
             }
+            Breaks.Clear();
 
-            Breaks = new ObservableCollection<BreakModel>(breaks);
+            AddRange( breaks);
         }
 
+
+        public void AddRange( List<BreakModel> items)
+        {
+            foreach (var item in items)
+            {
+                Breaks.Add(item);
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
