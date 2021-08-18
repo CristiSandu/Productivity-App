@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProductivityApp.View.ProductivityTabView">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Aquamarine">
+            <Label Text="{Binding DateTime1, StringFormat='{0:T}'}"
+                   BackgroundColor="Red"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding EndProgram}"
+                   BackgroundColor="Red"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+            <Button Text="Reset" Command="{Binding ResetTimer}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

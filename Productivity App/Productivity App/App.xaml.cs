@@ -10,7 +10,7 @@ namespace Productivity_App
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new ProductivityApp.View.ProductivityTabView();
         }
 
         protected override void OnStart()

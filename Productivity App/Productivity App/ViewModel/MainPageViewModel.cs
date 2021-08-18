@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Timers;
 
-namespace Productivity_App
+namespace Productivity_App.ViewModel
 {
     class MainPageViewModel : INotifyPropertyChanged
     {
