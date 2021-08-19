@@ -87,7 +87,7 @@ namespace ProductivityApp.ViewModel
         public ProductivityTabViewModel()
         {
             ResetTimer = new Command(() => {
-                Preferences.Remove("time");
+                //Preferences.Remove("time");
                 
                 StartTimer();
                 GetBreaks();
@@ -133,11 +133,11 @@ namespace ProductivityApp.ViewModel
             {
                 var myValue = Preferences.Get("time", "default_value");
                 time = DateTime.Parse(myValue);
-                if (time < DateTime.Now)
-                {
-                    time = DateTime.Now.AddHours(8);
-                    Preferences.Set("time", time.ToString());
-                }
+                //if (time < DateTime.Now)
+                //{
+                //    time = DateTime.Now.AddHours(8);
+                //    Preferences.Set("time", time.ToString());
+                //}
                 EndProgram = time.ToString("HH:mm");
             }
             else

@@ -14,9 +14,13 @@
                 <Label Text="{Binding StartTime}" 
                        FontSize="Large"
                        FontAttributes="Bold"/>
-            
+
+
+               
+
             </StackLayout>
-            <TimePicker x:Name="timePickerForStart" FontAttributes="Bold" FontSize="Large" Time="{Binding StartTime}" PropertyChanged="TimePicker_PropertyChanged"/>
+            <TimePicker x:Name="timePickerForStart" FontAttributes="Bold" FontSize="Large" />
+            <Button Text="Save" Clicked="Button_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

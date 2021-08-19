@@ -20,26 +20,10 @@ namespace ProductivityApp.ViewModel
                 if (_startTime != value)
                 {
                     _startTime = value;
+                    
                     Preferences.Remove("time");
                     Preferences.Set("time", _startTime.ToString());
                     RaisePropertyChanged("StartTime");
-                }
-            }
-        }
-
-        public SettingsViewModel()
-        {
-            if (Preferences.ContainsKey("time"))
-            {
-                var myValue = Preferences.Get("time", "default_value");
-                try
-                {
-                    StartTime = TimeSpan.Parse(myValue);
-                }catch(FormatException ex)
-                {
-                    DateTime time;
-                    time = DateTime.Parse(myValue);
-                    StartTime = new TimeSpan(time.Hour, time.Minute, time.Second);
                 }
             }
         }

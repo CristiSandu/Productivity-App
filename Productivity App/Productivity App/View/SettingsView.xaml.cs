@@ -19,10 +19,14 @@ namespace ProductivityApp.View
             BindingContext = new SettingsViewModel();
         }
 
-        private void TimePicker_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+      
+
+        private void Button_Clicked(object sender, EventArgs e)
         {
-            if (timePickerForStart.Time != null && BindingContext != null )
-                (BindingContext as SettingsViewModel).StartTime = timePickerForStart.Time;
+            if (timePickerForStart.Time != null && BindingContext != null) {
+                TimeSpan time = timePickerForStart.Time;
+                (BindingContext as SettingsViewModel).StartTime = time + TimeSpan.FromHours(8);
+            }
         }
     }
 }
